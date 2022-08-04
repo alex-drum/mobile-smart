@@ -36,6 +36,19 @@ public class BarcodeSceneController implements Initializable {
             socket = new Socket("localhost", PORT);
             is = new DataInputStream(socket.getInputStream());
             os = new DataOutputStream(socket.getOutputStream());
+
+            barcodeScene.setOnKeyPressed( event -> {
+                if( event.getCode() == KeyCode.ESCAPE ) {
+                    try {
+//                        onBarcodeButtonClick();
+                        switchToMenu();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            } );
+
             barcodeTextField.setOnKeyPressed( event -> {
                 if( event.getCode() == KeyCode.ENTER ) {
                     try {
@@ -49,6 +62,19 @@ public class BarcodeSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void switchToMenu() {
+        AnchorPane pane;
+        try {
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource("StartScene.fxml"));
+            pane = loader.load();
+            barcodeScene.getChildren().setAll(pane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
